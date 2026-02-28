@@ -393,7 +393,7 @@ export default function Home() {
   // All message lines — merged into full sentences so they display compactly in 2 columns
   const allLines = [
     "Hey Shuhana! 🌸",
-    "Being your sister has been one of the best parts of my life. 💛",
+    "Having you as sister has been one of the best parts of my life. 💛",
     "Your smile, your energy & your kindness light up every room you walk into.",
     "You truly deserve all the happiness in the world! ✨",
     "On this special day, I wish you a year full of joy, success & everything you dream of. 🌟",
