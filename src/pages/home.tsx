@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, Environment, useTexture, Stars, Preload } from "@react-three/drei";
+import { OrbitControls, Environment, useTexture, Stars, Preload, useProgress } from "@react-three/drei";
 import * as THREE from "three";
 import confetti from "canvas-confetti";
 import { motion, AnimatePresence } from "framer-motion";
@@ -319,6 +319,8 @@ export default function Home() {
   const [showParticles, setShowParticles] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const { active: sceneLoading, progress: sceneProgress } = useProgress();
+  const sceneReady = !sceneLoading && sceneProgress >= 100;
 
   // Check screen size for hybrid responsive approach
   useEffect(() => {
@@ -479,13 +481,32 @@ export default function Home() {
                   A Very Special<br /><span className="text-[#D4AF37]">Birthday</span>
                 </h1>
                 <p className="text-muted-foreground tracking-[0.25em] uppercase text-xs md:text-sm">— for Sneha  —</p>
-                <motion.button
-                  onClick={handleEnter}
-                  whileHover={{ scale: 1.05, boxShadow: "0 0 60px rgba(219,61,104,0.7)" }} whileTap={{ scale: 0.97 }}
-                  className="mt-4 px-10 py-4 md:px-14 md:py-5 bg-primary text-white rounded-full font-medium tracking-widest shadow-[0_0_30px_rgba(219,61,104,0.4)] transition-all text-sm md:text-base"
-                >
-                  ✦ OPEN YOUR GIFT ✦
-                </motion.button>
+                <div className="flex flex-col items-center gap-3 mt-4">
+                  <motion.button
+                    onClick={handleEnter}
+                    disabled={!sceneReady}
+                    whileHover={sceneReady ? { scale: 1.05, boxShadow: "0 0 60px rgba(219,61,104,0.7)" } : {}}
+                    whileTap={sceneReady ? { scale: 0.97 } : {}}
+                    className="px-10 py-4 md:px-14 md:py-5 bg-primary text-white rounded-full font-medium tracking-widest shadow-[0_0_30px_rgba(219,61,104,0.4)] transition-all text-sm md:text-base disabled:opacity-50 disabled:cursor-wait"
+                  >
+                    {sceneReady ? "✦ OPEN YOUR GIFT ✦" : "⏳ Preparing..."}
+                  </motion.button>
+                  {/* Loading progress bar */}
+                  {!sceneReady && (
+                    <div className="w-44 h-[3px] rounded-full overflow-hidden bg-white/10">
+                      <motion.div
+                        className="h-full rounded-full bg-primary"
+                        animate={{ width: `${sceneProgress}%` }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                      />
+                    </div>
+                  )}
+                  {!sceneReady && (
+                    <span className="text-[10px] tracking-widest text-white/30 uppercase">
+                      {Math.round(sceneProgress)}% loaded
+                    </span>
+                  )}
+                </div>
               </motion.div>
             </motion.div>
           )}
