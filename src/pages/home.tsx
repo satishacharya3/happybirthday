@@ -358,34 +358,32 @@ export default function Home() {
     setStep('landing');
   }, []);
 
-  // Expanded Left card lines
-  const leftLines = [
-    "You are officially my",
-    "favorite notification. 💛",
+  // All message lines — shown one after another in a single card
+  const allLines = [
+    "Hey Sneha! 🌸",
     "",
-    "Not just a friend,",
-    "but a true blessing.",
+    "Being your classmate has been",
+    "one of the best parts of",
+    "this journey. 💛",
     "",
-    "Thank you for the laughs,",
-    "and the endless support.",
+    "Your smile, your energy &",
+    "your kindness light up every",
+    "room you walk into.",
     "",
-    "Special category:",
-    "UNLOCKED ✨",
-  ];
-
-  // Expanded Right card lines
-  const rightLines = [
-    "May every dream you",
-    "hold find its way to you.",
+    "You truly deserve all",
+    "the happiness in the world! ✨",
     "",
-    "I hope this year brings",
-    "you as much joy as you",
-    "bring to others.",
+    "On this special day, I wish",
+    "you a year full of joy,",
+    "success & everything you",
+    "dream of. 🌟",
     "",
-    "The world is genuinely",
-    "better with you in it.",
+    "May every door open for you",
+    "& every goal find its way.",
     "",
-    "Happy Birthday, Sneha  🎂",
+    "Keep shining, always.",
+    "",
+    "Happy Birthday, Sneha! 🎂🎉",
   ];
 
   return (
@@ -510,57 +508,38 @@ export default function Home() {
             </motion.div>
           )}
 
-          {/* ── HYBRID MESSAGE STEP ── */}
+          {/* ── MESSAGE STEP — single centered card ── */}
           {step === 'message' && (
             <motion.div
               key="message"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              // Flex-col on mobile (stacking cards vertically), flex-row on desktop (side by side)
-              className="absolute inset-0 pointer-events-none flex flex-col md:flex-row items-center justify-center md:justify-between px-4 md:px-12 py-16 md:py-0 gap-6 overflow-y-auto hide-scroll"
+              className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center px-4 py-16"
             >
-              {/* LEFT card */}
               <motion.div
-                initial={{ x: -80, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.65, ease: "easeOut" }}
-                className="pointer-events-auto w-full max-w-[280px] md:max-w-[260px] flex-shrink-0"
+                initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.7, ease: "easeOut" }}
+                className="pointer-events-auto w-full max-w-[340px]"
                 style={{
-                  background: "rgba(12,0,20,0.88)", backdropFilter: "blur(18px)", border: "1px solid rgba(219,61,104,0.35)", borderRadius: "1.2rem", boxShadow: "0 0 40px rgba(219,61,104,0.15), 0 20px 50px rgba(0,0,0,0.6)", padding: "1.3rem 1.4rem",
+                  background: "rgba(12,0,20,0.90)", backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(219,61,104,0.35)", borderRadius: "1.4rem",
+                  boxShadow: "0 0 50px rgba(219,61,104,0.18), 0 20px 60px rgba(0,0,0,0.65)",
+                  padding: "1.6rem 1.8rem",
                 }}
               >
-                <div className="flex items-center gap-1.5 mb-3">
-                  <Heart size={12} className="text-primary fill-primary" />
-                  <span className="text-[9px] tracking-[0.25em] uppercase text-primary/60">For you</span>
+                <div className="flex items-center gap-1.5 mb-4">
+                  <Heart size={13} className="text-primary fill-primary" />
+                  <span className="text-[9px] tracking-[0.25em] uppercase text-primary/60">A message for you</span>
                 </div>
-                <MessageCard lines={leftLines} onDone={() => {}} startDelay={150} direction="left" />
-              </motion.div>
-
-              {/* CENTER continue button */}
-              <div className="pointer-events-auto flex flex-col items-center gap-2 flex-shrink-0 md:my-0 my-4">
+                <MessageCard lines={allLines} onDone={() => {}} startDelay={150} direction="left" />
                 <motion.button
                   onClick={() => setStep('final')}
                   initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-                  // Increased delay to account for the longer text animation
-                  transition={{ delay: 3.5, duration: 0.5, ease: "backOut" }}
-                  whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}
-                  className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary/20 border border-primary/50 text-primary flex items-center justify-center text-lg hover:bg-primary/35 transition-all"
-                  style={{ boxShadow: "0 0 30px rgba(219,61,104,0.3)" }}
+                  transition={{ delay: 7, duration: 0.5, ease: "backOut" }}
+                  whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.95 }}
+                  className="mt-6 w-full py-2.5 rounded-full bg-primary/20 border border-primary/50 text-primary text-sm font-medium tracking-widest hover:bg-primary/35 transition-all"
+                  style={{ boxShadow: "0 0 24px rgba(219,61,104,0.25)" }}
                 >
-                  →
+                  Continue →
                 </motion.button>
-              </div>
-
-              {/* RIGHT card */}
-              <motion.div
-                initial={{ x: 80, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.65, ease: "easeOut", delay: 0.1 }}
-                className="pointer-events-auto w-full max-w-[280px] md:max-w-[260px] flex-shrink-0"
-                style={{
-                  background: "rgba(12,0,20,0.88)", backdropFilter: "blur(18px)", border: "1px solid rgba(212,175,55,0.3)", borderRadius: "1.2rem", boxShadow: "0 0 40px rgba(212,175,55,0.1), 0 20px 50px rgba(0,0,0,0.6)", padding: "1.3rem 1.4rem",
-                }}
-              >
-                <div className="flex items-center gap-1.5 mb-3 justify-end">
-                  <span className="text-[9px] tracking-[0.25em] uppercase text-[#D4AF37]/60">always</span>
-                  <Heart size={12} className="text-[#D4AF37] fill-[#D4AF37]" />
-                </div>
-                <MessageCard lines={rightLines} onDone={() => {}} startDelay={400} direction="right" />
               </motion.div>
             </motion.div>
           )}
@@ -579,7 +558,7 @@ export default function Home() {
 
               <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.7, duration: 0.9 }} className="pointer-events-auto text-center flex flex-col items-center gap-4 pb-8 md:pb-0">
                 <p className="text-sm md:text-lg text-white/70 italic max-w-sm leading-relaxed">
-                  "Thank you for existing.<br />The world is genuinely better with you in it."
+                  "Wishing you a day as beautiful<br />and wonderful as you are, Sneha! 🌸"
                 </p>
                 <div className="flex flex-wrap gap-3 justify-center mt-2">
                   <motion.button onClick={() => launchCelebration()} whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.95 }} className="flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-primary/20 border border-primary/40 text-primary rounded-full text-xs md:text-sm font-medium tracking-wider hover:bg-primary/30 transition-all backdrop-blur-sm">
