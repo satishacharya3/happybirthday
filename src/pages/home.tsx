@@ -392,14 +392,14 @@ export default function Home() {
 
   // All message lines — merged into full sentences so they display compactly in 2 columns
   const allLines = [
-    "Hey Sneha! 🌸",
-    "Being your classmate has been one of the best parts of this journey. 💛",
+    "Hey Shuhana! 🌸",
+    "Being your sister has been one of the best parts of my life. 💛",
     "Your smile, your energy & your kindness light up every room you walk into.",
     "You truly deserve all the happiness in the world! ✨",
     "On this special day, I wish you a year full of joy, success & everything you dream of. 🌟",
     "May every door open for you & every goal find its way.",
     "Keep shining, always.",
-    "Happy Birthday, Sneha! 🎂🎉",
+    "Happy Birthday, Shuhana! 🎂🎉",
   ];
 
   return (
@@ -499,7 +499,7 @@ export default function Home() {
                 <h1 className="text-4xl md:text-7xl font-serif text-shimmer text-primary leading-tight">
                   A Very Special<br /><span className="text-[#D4AF37]">Birthday</span>
                 </h1>
-                <p className="text-muted-foreground tracking-[0.25em] uppercase text-xs md:text-sm">— for Sneha  —</p>
+                <p className="text-muted-foreground tracking-[0.25em] uppercase text-xs md:text-sm">— for Shuhana  —</p>
                 <div className="flex flex-col items-center gap-3 mt-4">
                   <motion.button
                     onClick={handleEnter}
@@ -519,7 +519,7 @@ export default function Home() {
             <motion.div key="cake" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="absolute inset-0 flex flex-col items-center justify-end pb-12 md:pb-16 pointer-events-none">
               <div className="pointer-events-auto text-center flex flex-col items-center gap-4 md:gap-5 px-4">
                 <motion.h2 animate={{ opacity: [0.7, 1, 0.7] }} transition={{ duration: 2.5, repeat: Infinity }} className="text-xl md:text-4xl font-serif text-white" style={{ textShadow: "0 0 30px rgba(219,61,104,0.6)" }}>
-                  Make your wish, Sneha ... 🕯️
+                  Make your wish, Shuhana ... 🕯️
                 </motion.h2>
                 <motion.button
                   onClick={handleBlowCandle}
@@ -579,13 +579,13 @@ export default function Home() {
                   Happy Birthday
                 </h1>
                 <div className="text-3xl md:text-6xl font-serif mt-1 text-transparent bg-clip-text" style={{ background: "linear-gradient(135deg, #D4AF37 0%, #FFD700 100%)", WebkitBackgroundClip: "text", filter: "drop-shadow(0 0 20px rgba(212,175,55,0.6))" }}>
-                  Sneha  ✨
+                  Shuhana  ✨
                 </div>
               </motion.div>
 
               <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.7, duration: 0.9 }} className="pointer-events-auto text-center flex flex-col items-center gap-4 pb-8 md:pb-0">
                 <p className="text-sm md:text-lg text-white/70 italic max-w-sm leading-relaxed">
-                  "Wishing you a day as beautiful<br />and wonderful as you are, Sneha! 🌸"
+                  "Wishing you a day as beautiful<br />and wonderful as you are, Shuhana! 🌸"
                 </p>
                 <div className="flex flex-wrap gap-3 justify-center mt-2">
                   <motion.button onClick={() => launchCelebration()} whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.95 }} className="flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-primary/20 border border-primary/40 text-primary rounded-full text-xs md:text-sm font-medium tracking-wider hover:bg-primary/30 transition-all backdrop-blur-sm">

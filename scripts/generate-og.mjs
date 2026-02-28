@@ -193,7 +193,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.
 
   <!-- ── "Happy Birthday" text on cake side ── -->
   <text x="780" y="345" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#DB3D68" letter-spacing="1">Happy Birthday</text>
-  <text x="780" y="362" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="900" fill="#D4AF37" letter-spacing="2">Sneha</text>
+  <text x="780" y="362" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="900" fill="#D4AF37" letter-spacing="2">Shuhana</text>
 
   <!-- ── Left panel text ── -->
   <!-- decorative line -->
@@ -207,7 +207,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.
   <text x="98" y="375" font-family="Georgia,'Playfair Display',serif" font-size="82" font-weight="900" fill="url(#titleG)" filter="url(#pinkGlow)">Birthday</text>
 
   <!-- Name -->
-  <text x="100" y="440" font-family="Georgia,'Playfair Display',serif" font-size="62" font-weight="900" fill="url(#nameG)" filter="url(#goldGlow)">Sneha 🎂</text>
+  <text x="100" y="440" font-family="Georgia,'Playfair Display',serif" font-size="62" font-weight="900" fill="url(#nameG)" filter="url(#goldGlow)">Shuhana 🎂</text>
 
   <!-- Subtitle -->
   <text x="100" y="490" font-family="Arial,sans-serif" font-size="15" fill="rgba(255,255,255,0.45)" letter-spacing="3">Open your gift — something beautiful awaits</text>
