@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, Environment, useTexture, Stars, Preload, useProgress } from "@react-three/drei";
+import { OrbitControls, Environment, useTexture, Stars, useProgress } from "@react-three/drei";
 import * as THREE from "three";
 import confetti from "canvas-confetti";
 import { motion, AnimatePresence } from "framer-motion";
@@ -17,10 +17,8 @@ import mem6 from "@/assets/images/memory-6.jpg";
 
 const memoryImages = [mem1, mem2, mem3, mem4, mem5, mem6];
 
-// Preload images safely for Next.js/React
-if (typeof window !== "undefined") {
-  memoryImages.forEach((src) => useTexture.preload(src));
-}
+// Memory images are NOT preloaded — they load lazily when photos become visible
+// Only the cake image is preloaded in PremiumCake.tsx
 
 // ── Typewriter hook ───────────────────────────────────────────────────────────
 function useTypewriter(text: string, delay = 38, startDelay = 300) {
@@ -44,15 +42,15 @@ function useTypewriter(text: string, delay = 38, startDelay = 300) {
 }
 
 // ── Floating hearts layer ─────────────────────────────────────────────────────
-const HEARTS = ["💛", "🌸", "✨", "💖", "🎂", "⭐", "🌟", "💫"];
+const HEARTS = ["💛", "🌸", "✨", "💖", "🎂", "⭐"];
 function FloatingParticles() {
   const particles = useRef(
-    Array.from({ length: 18 }, (_, i) => ({
+    Array.from({ length: 8 }, (_, i) => ({
       id: i,
       emoji: HEARTS[i % HEARTS.length],
       left: `${Math.random() * 95}%`,
       delay: `${Math.random() * 8}s`,
-      duration: `${8 + Math.random() * 8}s`,
+      duration: `${10 + Math.random() * 8}s`,
       size: `${0.9 + Math.random() * 1.2}rem`,
     }))
   ).current;
@@ -132,22 +130,20 @@ const TABLE_PLACEMENTS: { r: number; aDeg: number; rotYDeg: number }[] = [
   { r: 3.9,  aDeg: 300, rotYDeg:  -8 },
 ];
 
-// ── BG carousel: each image ×3, full 360°, large tiles, bob + tilt animation ──
-// Each image appears 3 times around the full ring
-const bgImagesFull = [...memoryImages, ...memoryImages, ...memoryImages];
+// ── BG carousel: single ring of images, optimized ──
+const bgImagesFull = memoryImages;
 
-// Stable per-card params (deterministic, no Math.random at render time)
 const BG_CARD_DATA = Array.from({ length: bgImagesFull.length }, (_, i) => ({
-  yBase: 0.6 + ((i * 7) % 11) * 0.22,          // 0.6 → 3.0, varied heights
-  phase: (i * Math.PI * 2 * 0.618033988749895) % (Math.PI * 2), // golden-ratio phases
-  rotVariance: (((i * 3 + 1) * 0.137) % 1 - 0.5) * 0.3,        // −0.15 … +0.15 rad tilt
+  yBase: 0.6 + ((i * 7) % 11) * 0.22,
+  phase: (i * Math.PI * 2 * 0.618033988749895) % (Math.PI * 2),
+  rotVariance: (((i * 3 + 1) * 0.137) % 1 - 0.5) * 0.3,
 }));
 
 function BgCarousel({ active = false }) {
   const groupRef = useRef<THREE.Group>(null);
-  const count = bgImagesFull.length; // 18
-  const R = 13;  // larger radius for bigger tiles
-  const W = 5.0, H = 3.7;
+  const count = bgImagesFull.length; // 6
+  const R = 11;
+  const W = 4.5, H = 3.3;
 
   useFrame(() => {
     if (groupRef.current && active)
@@ -437,20 +433,31 @@ export default function Home() {
       <div className="absolute inset-0 z-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 30% at 50% 0%, rgba(212,175,55,0.10) 0%, transparent 60%)" }} />
 
       <div className="absolute inset-0 z-[1]">
-        <Canvas shadows camera={{ position: [0, 6, 13], fov: isMobile ? 50 : 40 }}>
-          <Stars radius={80} depth={50} count={3000} factor={3} saturation={0.5} fade speed={0.6} />
+        <Canvas
+          shadows
+          camera={{ position: [0, 6, 13], fov: isMobile ? 50 : 40 }}
+          dpr={[1, 1.5]}
+          performance={{ min: 0.5 }}
+          gl={{ antialias: false, powerPreference: 'high-performance' }}
+        >
+          <Stars radius={60} depth={40} count={800} factor={3} saturation={0.5} fade speed={0.6} />
           <ambientLight intensity={0.3} />
           <spotLight position={[6, 10, 8]} angle={0.2} penumbra={1} intensity={2.5} color="#ff8fa0" castShadow />
           <spotLight position={[-8, 6, -4]} angle={0.3} penumbra={1} intensity={1.2} color="#7090ff" />
           <pointLight position={[0, -3, 5]} color="#D4AF37" intensity={1.5} distance={12} />
-          <Environment preset="night" resolution={256} />
+          <Environment preset="night" resolution={64} />
+          {/* Core scene: cake + table load first (small, fast) */}
           <Suspense fallback={null}>
             <Table />
             <PremiumCake candleLit={candleLit} />
-            <PhotoGallery active={step !== 'landing'} />
-            <BgCarousel active={step !== 'landing'} />
-            <Preload all />
           </Suspense>
+          {/* Photos load lazily — only after user enters the experience */}
+          {step !== 'landing' && (
+            <Suspense fallback={null}>
+              <PhotoGallery active />
+              <BgCarousel active />
+            </Suspense>
+          )}
           <OrbitControls
             enableZoom={false}
             enableDamping={true}

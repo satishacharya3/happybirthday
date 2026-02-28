@@ -14,14 +14,14 @@ function Flower({ position, color = "#FF69B4", scale = 1 }: { position: [number,
   return (
     <group position={position} scale={scale}>
       <mesh>
-        <sphereGeometry args={[0.13, 16, 16]} />
+        <sphereGeometry args={[0.13, 8, 8]} />
         <meshStandardMaterial color="#FFDA44" metalness={0.3} roughness={0.4} />
       </mesh>
       {Array.from({ length: 5 }).map((_, i) => {
         const a = (i / 5) * Math.PI * 2;
         return (
           <mesh key={i} position={[Math.cos(a) * 0.26, 0, Math.sin(a) * 0.26]} rotation={[Math.PI / 2, 0, a]}>
-            <sphereGeometry args={[0.15, 12, 8]} />
+            <sphereGeometry args={[0.15, 8, 6]} />
             <meshStandardMaterial color={color} roughness={0.6} />
           </mesh>
         );
@@ -39,7 +39,7 @@ function Rosettes({ y, radius, count }: { y: number; radius: number; count: numb
         const a = (i / count) * Math.PI * 2;
         return (
           <mesh key={i} position={[Math.cos(a) * radius, y, Math.sin(a) * radius]}>
-            <sphereGeometry args={[0.13, 16, 16]} />
+            <sphereGeometry args={[0.13, 8, 8]} />
             <meshStandardMaterial color={colors[i % colors.length]} roughness={0.5} />
           </mesh>
         );
@@ -54,7 +54,7 @@ function CakePhoto() {
   texture.colorSpace = THREE.SRGBColorSpace;
   return (
     <mesh position={[0, 2.13, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-      <circleGeometry args={[1.1, 64]} />
+      <circleGeometry args={[1.1, 32]} />
       <meshStandardMaterial map={texture} roughness={0.3} toneMapped={false} />
     </mesh>
   );
@@ -143,15 +143,15 @@ function Table() {
   return (
     <group ref={tableRef} position={[0, -0.6, 0]}>
       <mesh position={[0, 0, 0]} receiveShadow>
-        <cylinderGeometry args={[5.0, 5.0, 0.18, 64]} />
+        <cylinderGeometry args={[5.0, 5.0, 0.18, 32]} />
         <meshStandardMaterial color="#1a0a00" metalness={0.1} roughness={0.4} />
       </mesh>
       <mesh position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[5.0, 0.06, 16, 64]} />
+        <torusGeometry args={[5.0, 0.06, 12, 32]} />
         <meshStandardMaterial color="#D4AF37" metalness={1} roughness={0.1} />
       </mesh>
       <mesh position={[0, -0.1, 0]}>
-        <cylinderGeometry args={[4.8, 5.2, 0.06, 64]} />
+        <cylinderGeometry args={[4.8, 5.2, 0.06, 32]} />
         <meshStandardMaterial color="#3d0018" roughness={0.9} />
       </mesh>
       {/* Pedestal: top flush with table bottom (local y=-0.09), height 1.65 */}
@@ -176,12 +176,12 @@ export function PremiumCake({ candleLit }: { candleLit: boolean }) {
     if (cakeBodyRef.current) cakeBodyRef.current.rotation.y -= 0.004;
   });
 
-  const bottomFlowers: [number, number, number][] = Array.from({ length: 8 }).map((_, i) => {
-    const a = (i / 8) * Math.PI * 2;
+  const bottomFlowers: [number, number, number][] = Array.from({ length: 6 }).map((_, i) => {
+    const a = (i / 6) * Math.PI * 2;
     return [Math.cos(a) * 1.85, 1.15, Math.sin(a) * 1.85];
   });
-  const topFlowers: [number, number, number][] = Array.from({ length: 6 }).map((_, i) => {
-    const a = (i / 6) * Math.PI * 2;
+  const topFlowers: [number, number, number][] = Array.from({ length: 5 }).map((_, i) => {
+    const a = (i / 5) * Math.PI * 2;
     return [Math.cos(a) * 1.28, 2.13, Math.sin(a) * 1.28];
   });
   const flowerColors = ["#FF69B4", "#FF1493", "#FFB6C1", "#DB3D68", "#FF85C2", "#FF69B4", "#FF1493", "#FFB6C1"];
@@ -190,27 +190,27 @@ export function PremiumCake({ candleLit }: { candleLit: boolean }) {
     <group position={[0, 0, 0]}>
       <group ref={cakeBodyRef}>
         <mesh position={[0, -0.2, 0]}>
-          <cylinderGeometry args={[2.5, 2.6, 0.2, 64]} />
+          <cylinderGeometry args={[2.5, 2.6, 0.2, 32]} />
           <meshStandardMaterial color="#111" metalness={0.9} roughness={0.1} />
         </mesh>
         <mesh position={[0, 0.5, 0]}>
-          <cylinderGeometry args={[2, 2, 1.2, 64]} />
+          <cylinderGeometry args={[2, 2, 1.2, 32]} />
           <meshStandardMaterial color="#FFF0F5" roughness={0.4} />
         </mesh>
-        <Rosettes y={0.02} radius={1.92} count={16} />
-        <Rosettes y={1.0}  radius={1.92} count={16} />
+        <Rosettes y={0.02} radius={1.92} count={10} />
+        <Rosettes y={1.0}  radius={1.92} count={10} />
         <mesh position={[0, 1.1, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[2, 0.06, 16, 64]} />
+          <torusGeometry args={[2, 0.06, 12, 32]} />
           <meshStandardMaterial color="#D4AF37" metalness={1} roughness={0.1} />
         </mesh>
         <mesh position={[0, 1.6, 0]}>
-          <cylinderGeometry args={[1.4, 1.4, 1, 64]} />
+          <cylinderGeometry args={[1.4, 1.4, 1, 32]} />
           <meshStandardMaterial color="#fff" roughness={0.2} />
         </mesh>
-        <Rosettes y={1.15} radius={1.33} count={10} />
-        <Rosettes y={1.95} radius={1.33} count={10} />
+        <Rosettes y={1.15} radius={1.33} count={8} />
+        <Rosettes y={1.95} radius={1.33} count={8} />
         <mesh position={[0, 2.11, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[1.4, 0.04, 16, 64]} />
+          <torusGeometry args={[1.4, 0.04, 12, 32]} />
           <meshStandardMaterial color="#D4AF37" metalness={1} roughness={0.1} />
         </mesh>
 
